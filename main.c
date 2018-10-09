@@ -21,7 +21,7 @@ t_main	*init_ping(void)
 	p->total_msec = 0;
 	p->tv_out.tv_sec = RECV_TIMEOUT;
 	p->tv_out.tv_usec = 0;
-	p->ttl_val = 64;
+	p->ttl_val = 63;
 	p->msg_count = 0;
 	p->msg_received_count = 0;
 	p->flag = 1;

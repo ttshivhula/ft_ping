@@ -28,7 +28,10 @@ void	ft_ping_msg(t_main *p)
 
 void	error_report(t_main *p)
 {
+	if (p->v)
+	{
 		printf("%d bytes from %s: type = %d code = %d\n",
 				PING_PKT_SIZE, p->ip_addr,
 				p->pckt.hdr.type, p->pckt.hdr.code);
+	}
 }

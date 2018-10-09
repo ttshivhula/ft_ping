@@ -56,10 +56,9 @@ void		ping_print(t_main *p, int type, char *ping_dom)
 	else
 	{
 		gettimeofday(&p->tfe, NULL);
-		time_elapsed = (((double)(p->tfe.tv_usec -
-						p->tfs.tv_usec)) / 1000.0) - 1000.0;
-		p->total_msec = (p->tfe.tv_sec -
-				p->tfs.tv_sec) * 1000.0 + time_elapsed;
+		time_elapsed = (double)((p->tfe.tv_usec - p->tfs.tv_usec) / 1000.0);
+		p->total_msec = ((p->tfe.tv_sec -
+				p->tfs.tv_sec)) * 1000.0 + time_elapsed;
 		pkt_loss = (double)(((p->msg_count -
 						p->msg_received_count) / p->msg_count) * 100);
 		printf("\n--- %s ping statistics ---\n", ping_dom);
@@ -96,9 +95,9 @@ void		ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 					error_report(p);
 			}
 		}
-		sec_sleep(1);
+		sleep(1);
 	}
-	ping_print(p, 0, domain);
+	(!g_pingloop) ? ping_print(p, 0, domain) : 0;
 }
 
 int			main(int c, char **v)

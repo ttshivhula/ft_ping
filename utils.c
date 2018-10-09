@@ -20,7 +20,8 @@ void			sec_sleep(int sec)
 	gettimeofday(&current, NULL);
 	next = current;
 	next.tv_sec += sec;
-	while (current.tv_sec < next.tv_sec)
+	while (current.tv_sec < next.tv_sec ||
+			current.tv_usec < next.tv_usec)
 		gettimeofday(&current, NULL);
 }
 

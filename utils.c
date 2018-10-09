@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 10:59:50 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 14:41:49 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 14:49:44 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void			sec_sleep(int sec)
 	gettimeofday(&current, NULL);
 	next = current;
 	next.tv_sec += sec;
-	while (current.tv_sec < next.tv_sec ||
-			current.tv_usec < next.tv_usec)
+	while ((current.tv_sec < next.tv_sec ||
+			current.tv_usec < next.tv_usec) && (g_ping.pingloop))
 		gettimeofday(&current, NULL);
 }
 

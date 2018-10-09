@@ -20,11 +20,8 @@ void		sec_sleep(int sec)
 	gettimeofday(&current, NULL);
 	next = current;
 	next.tv_sec += sec;
-	while (current.tv_sec < next.tv_sec ||
-		current.tv_usec < next.tv_usec)
-	{
+	while (current.tv_sec < next.tv_sec)
 		gettimeofday(&current, NULL);
-	}
 }
 
 unsigned short checksum(void *b, int len)

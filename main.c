@@ -37,9 +37,6 @@ t_ping	create_msg(int *msg_count)
 	bzero(&pckt, sizeof(pckt));
 	pckt.hdr.type = ICMP_ECHO;
 	pckt.hdr.un.echo.id = getpid();
-	while (++i < sizeof(pckt.msg) - 1)
-		pckt.msg[i] = i + '0';
-	pckt.msg[i] = 0;
 	pckt.hdr.un.echo.sequence = (*msg_count)++;
 	pckt.hdr.checksum = checksum(&pckt, sizeof(pckt));
 	return (pckt);
@@ -52,7 +49,7 @@ void	ping_print(t_main *p, int type, char *ping_dom)
 
 	if (type == 1)
 	{
-		printf("%d bytes from %s: icmp_seq=%d ttl=%d time = %.2Lf ms\n",
+		printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1Lf ms\n",
 				PING_PKT_SIZE, p->ip_addr, p->msg_count,
 				p->ttl_val, p->rtt_msec);
 		p->msg_received_count++;
@@ -60,7 +57,7 @@ void	ping_print(t_main *p, int type, char *ping_dom)
 	else
 	{
 		gettimeofday(&p->tfe, NULL);
-		time_elapsed = ((double)(p->tfe.tv_usec - p->tfs.tv_usec)) / 1000.0;
+		time_elapsed = (((double)(p->tfe.tv_usec - p->tfs.tv_usec)) / 1000.0) - 1000;
 		p->total_msec = (p->tfe.tv_sec - p->tfs.tv_sec) * 1000.0 + time_elapsed;
 		pkt_loss = (double)(((p->msg_count - p->msg_received_count) / p->msg_count) * 100); 
 		printf("\n--- %s ping statistics ---\n", ping_dom);
@@ -82,7 +79,6 @@ void	ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 		if (sendto(p->sockfd, &p->pckt, sizeof(p->pckt), 0, (struct sockaddr*) ping_addr,
 					sizeof(*ping_addr)) <= 0)
 		{
-			printf("Request timeout for icmp_seq %d\n", p->msg_count);
 			p->flag = 0;
 		}
 		p->addr_len = sizeof(p->r_addr);
@@ -116,7 +112,7 @@ int	main(int c, char **v)
 	signal(SIGINT, interupt_h);
 	if (p->sockfd && p->ip_addr)
 	{
-		printf("PING %s (%s): 56 bytes\n", v[1], p->ip_addr);
+		printf("PING %s (%s) 56(84) bytes of data\n", v[1], p->ip_addr);
 		ft_ping(p, &addr_con, v[1]);
 	}
 	return (0);

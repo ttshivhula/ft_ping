@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 10:59:50 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 10:58:17 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 14:16:48 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ void			sec_sleep(int sec)
 	while (current.tv_sec < next.tv_sec ||
 			current.tv_usec < next.tv_usec)
 		gettimeofday(&current, NULL);
+}
+
+int				ft_sleep(int sec)
+{
+	alarm(sec);
+	while (g_ping.sleeper)
+		;
+	alarm(0);
+	g_ping.sleeper = 1;
 }
 
 unsigned short	checksum(void *b, int len)
@@ -44,10 +53,12 @@ unsigned short	checksum(void *b, int len)
 	return ((unsigned short)~sum);
 }
 
-void			interupt_h(int inter)
+void			interupt_h(int sig)
 {
-	g_pingloop = 0;
-	(void)inter;
+	if (sig == SIGALRM)
+		g_ping.sleeper = 0;
+	else
+		g_ping.pingloop = 0;
 }
 
 char			*dns_lookup(char *addr_host, struct sockaddr_in	*addr_con)

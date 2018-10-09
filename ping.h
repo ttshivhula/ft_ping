@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 11:00:03 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 12:10:47 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 14:13:25 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,13 @@
 # define PING_SLEEP_RATE 1000000
 # define RECV_TIMEOUT 1
 
-int						g_pingloop;
+typedef struct			s_g
+{
+	int					pingloop;
+	int					sleeper;
+}						t_g;
+
+t_g						g_ping;
 
 typedef	socklen_t		t_len;
 

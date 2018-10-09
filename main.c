@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 13:26:02 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 13:29:08 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 14:14:25 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void		ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 	setsockopt(p->sockfd, SOL_IP, IP_TTL, &p->ttl_val, sizeof(p->ttl_val));
 	setsockopt(p->sockfd, SOL_SOCKET, SO_RCVTIMEO,
 			(const char *)&p->tv_out, sizeof(p->tv_out));
-	while (g_pingloop)
+	while (g_ping.pingloop)
 	{
 		ft_ping_msg(p);
 		if (sendto(p->sockfd, &p->pckt, sizeof(p->pckt), 0,
@@ -109,7 +109,8 @@ int			main(int c, char **v)
 	{
 		p = init_ping();
 		p->v = ping_help(c, v);
-		g_pingloop = 1;
+		g_ping.pingloop = 1;
+		g_ping.sleeper = 1;
 		p->ip_addr = dns_lookup((c == 2) ? v[1] : v[2], &addr_con);
 		p->sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 		signal(SIGINT, interupt_h);

@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 10:59:50 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 14:16:48 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 14:41:49 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char			*dns_lookup(char *addr_host, struct sockaddr_in	*addr_con)
 	return (ip);
 }
 
-int			ping_help(int c, char **v)
+int				ping_help(int c, char **v)
 {
 	if (c == 1 || (c == 2 && v[1][0] == '-'
 				&& v[1][1] == 'h' && v[1][2] == '\0'))

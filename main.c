@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 13:26:02 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 14:14:25 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 14:43:13 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,10 @@ void		ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 			gettimeofday(&p->time_end, NULL);
 			p->rtt_msec = ((double)(p->time_end.tv_usec -
 						p->time_start.tv_usec)) / 1000;
-			if (p->flag)
-			{
-				if ((p->pckt.hdr.type == 69 && p->pckt.hdr.code == 0))
-					ping_print(p, 1, domain);
-				else
-					error_report(p);
-			}
+			if (p->flag && (p->pckt.hdr.type == 69 && p->pckt.hdr.code == 0))
+				ping_print(p, 1, domain);
+			else
+				error_report(p);
 		}
 		sec_sleep(1);
 	}

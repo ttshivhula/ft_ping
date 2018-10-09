@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 11:00:03 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 14:13:25 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 14:41:19 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void					interupt_h(int inter);
 char					*dns_lookup(char *addr_host,
 		struct sockaddr_in *addr_con);
 void					sec_sleep(int sec);
-int					ping_help(int c, char **v);
+int						ping_help(int c, char **v);
 void					exit_err(char *s);
 t_ping					create_msg(int *msg_count);
 void					ft_ping_msg(t_main *p);

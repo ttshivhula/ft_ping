@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 13:26:02 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 12:10:53 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 13:29:08 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void		ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 		ft_ping_msg(p);
 		if (sendto(p->sockfd, &p->pckt, sizeof(p->pckt), 0,
 					(struct sockaddr *)ping_addr, sizeof(*ping_addr)) <= 0)
-			p->flag = 0;
+			p->flag = (p->v) ? p->flag : 0;
 		if (!(recvfrom(p->sockfd, &p->pckt, sizeof(p->pckt), 0,
 						(struct sockaddr*)&p->r_addr, (t_len*)&p->addr_len) <= 0
 					&& p->msg_count > 1))

@@ -20,7 +20,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@gcc $(OBJ) $(CFLAGS) -o $(NAME)
-	@printf "\x1b[32mCompiled $(NAME)\x1b[0m\n"
+	@printf "Compiled $(NAME)\n"
 
 clean:
 	@/bin/rm -f $(OBJ)

@@ -66,5 +66,6 @@ void				interupt_h(int inter);
 char				*dns_lookup(char *addr_host, struct sockaddr_in *addr_con);
 void				sec_sleep(int sec);
 void				ping_help(int c, char **v);
+void				exit_err(char *s);
 
 #endif

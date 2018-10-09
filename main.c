@@ -105,7 +105,7 @@ int	main(int c, char **v)
 	char			net_buf[NI_MAXHOST];
 	t_main			*p;
 
-	if (c > 2 && c < 4)
+	if (c >= 2 && c < 4)
 	{
 		ping_help(c, v);
 		p = init_ping();

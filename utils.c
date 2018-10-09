@@ -58,10 +58,9 @@ char		*dns_lookup(char *addr_host, struct sockaddr_in *addr_con)
 
 	memset(&(hints), 0, sizeof(hints));
 	hints.ai_family = AF_INET;
-	if ((ip = malloc(INET_ADDRSTRLEN)) < 0)
-		printf("Error malloc");
+	ip = malloc(INET_ADDRSTRLEN);
 	if (getaddrinfo(addr_host, NULL, &hints, &(res)) < 0)
-		printf("ping: unknown host\n");
+		exit_err("ping: unknown host\n");
 	sa_in = (struct sockaddr_in *)res->ai_addr;
 	inet_ntop(res->ai_family, &(sa_in->sin_addr), ip, INET_ADDRSTRLEN);
 	(*addr_con) = *sa_in;
@@ -71,8 +70,14 @@ char		*dns_lookup(char *addr_host, struct sockaddr_in *addr_con)
 
 void		ping_help(int c, char **v)
 {
-	if (c == 1 || (c == 3 && v[2][0] == '-'
-				&& v[2][1] == 'h' && v[2][2] == '\0'))
+	if (c == 1 || (c == 2 && v[1][0] == '-'
+				&& v[1][1] == 'h' && v[1][2] == '\0'))
+	{
+		printf("usage: ./ft_ping [-vh] hostname\n");
+		exit(0);
+	}
+	if (c == 2 && v[1][0] == '-'
+				&& v[1][1] == 'v' && v[1][2] == '\0')
 	{
 		printf("usage: ./ft_ping [-vh] hostname\n");
 		exit(0);

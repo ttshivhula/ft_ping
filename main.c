@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 13:26:02 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/09/18 13:26:03 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 10:02:38 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_main	*init_ping(void)
 	p->tv_out.tv_sec = RECV_TIMEOUT;
 	p->tv_out.tv_usec = 0;
 	p->ttl_val = 63;
-	p->msg_count = 0;
+	p->msg_count = -1;
 	p->msg_received_count = 0;
 	p->flag = 1;
 	gettimeofday(&p->tfs, NULL);
@@ -48,7 +48,8 @@ t_ping	create_msg(int *msg_count)
 
 void	ping_print(t_main *p, int type, char *ping_dom)
 {
-	double timeElapsed;
+	double time_elapsed;
+	double pkt_loss;
 
 	if (type == 1)
 	{
@@ -60,12 +61,12 @@ void	ping_print(t_main *p, int type, char *ping_dom)
 	else
 	{
 		gettimeofday(&p->tfe, NULL);
-		timeElapsed = ((double)(p->tfe.tv_usec - p->tfs.tv_usec))/1000000.0;
-		p->total_msec = (p->tfe.tv_sec - p->tfs.tv_sec)*1000.0+ timeElapsed;
+		time_elapsed = ((double)(p->tfe.tv_usec - p->tfs.tv_usec)) / 1000.0;
+		p->total_msec = (p->tfe.tv_sec - p->tfs.tv_sec) * 1000.0 + time_elapsed;
+		pkt_loss = (double)(((p->msg_count - p->msg_received_count) / p->msg_count) * 100); 
 		printf("\n--- %s ping statistics ---\n", ping_dom);
-		printf("%d packets sent, %d packets received, %d percent packet loss. Total time: %.1Lf ms\n",
-				p->msg_count, p->msg_received_count,
-				(int)(((p->msg_count - p->msg_received_count) / p->msg_count) * 100), p->total_msec); 
+		printf("%d packets transmitted, %d packets received, %d%% packet loss, time %.1Lf ms\n",
+				p->msg_count, p->msg_received_count, (int)pkt_loss, p->total_msec);
 	}
 }
 
@@ -82,6 +83,7 @@ void	ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 		if (sendto(p->sockfd, &p->pckt, sizeof(p->pckt), 0, (struct sockaddr*) ping_addr,
 					sizeof(*ping_addr)) <= 0)
 		{
+			printf("Request timeout for icmp_seq %d\n", p->msg_count);
 			p->flag = 0;
 		}
 		p->addr_len = sizeof(p->r_addr);
@@ -90,7 +92,7 @@ void	ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 				&& p->msg_count > 1)) 
 		{
 			gettimeofday(&p->time_end, NULL);
-			p->rtt_msec = ((double)(p->time_end.tv_usec - p->time_start.tv_usec))/1000.0;
+			p->rtt_msec = ((double)(p->time_end.tv_usec - p->time_start.tv_usec)) / 1000;
 			if(p->flag)
 			{
 				if ((p->pckt.hdr.type == 69 && p->pckt.hdr.code == 0))

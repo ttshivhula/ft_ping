@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 13:26:02 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 11:15:02 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 11:36:48 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void		ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 					(struct sockaddr *)ping_addr, sizeof(*ping_addr)) <= 0)
 			p->flag = 0;
 		if (!(recvfrom(p->sockfd, &p->pckt, sizeof(p->pckt), 0,
-						(struct sockaddr*)&p->r_addr, (socklen_t *)&p->addr_len) <= 0
+						(struct sockaddr*)&p->r_addr, (t_len*)&p->addr_len) <= 0
 					&& p->msg_count > 1))
 		{
 			gettimeofday(&p->time_end, NULL);

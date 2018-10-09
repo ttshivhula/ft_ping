@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 11:00:03 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 11:19:16 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 11:36:44 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define RECV_TIMEOUT 1
 
 int						g_pingloop;
+
+typedef	socklen_t		t_len;
 
 typedef struct			s_ping
 {

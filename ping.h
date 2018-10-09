@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 11:00:03 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/09/18 11:00:05 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 10:41:02 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef	struct			s_main
 unsigned short			checksum(void *b, int len);
 void				interupt_h(int inter);
 char				*dns_lookup(char *addr_host, struct sockaddr_in *addr_con);
-char				*reverse_dns_lookup(char *ip_addr);
 void				sec_sleep(int sec);
+void				ping_help(int c, char **v)
 
 #endif

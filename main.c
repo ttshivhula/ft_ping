@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 13:26:02 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 10:16:14 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 10:41:03 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ void	ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 		}
 		p->addr_len = sizeof(p->r_addr);
 		if (!(recvfrom(p->sockfd, &p->pckt, sizeof(p->pckt), 0, 
-					(struct sockaddr*)&p->r_addr, &p->addr_len) <= 0
-				&& p->msg_count > 1)) 
+						(struct sockaddr*)&p->r_addr, &p->addr_len) <= 0
+					&& p->msg_count > 1)) 
 		{
 			gettimeofday(&p->time_end, NULL);
 			p->rtt_msec = ((double)(p->time_end.tv_usec - p->time_start.tv_usec)) / 1000;
@@ -105,15 +105,21 @@ int	main(int c, char **v)
 	char			net_buf[NI_MAXHOST];
 	t_main			*p;
 
-	p = init_ping();
-	g_pingloop = 1;	
-	p->ip_addr = dns_lookup(v[1], &addr_con);
-	p->sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
-	signal(SIGINT, interupt_h);
-	if (p->sockfd && p->ip_addr)
+	if (c > 2 && c < 4)
 	{
-		printf("PING %s (%s) 56(84) bytes of data\n", v[1], p->ip_addr);
-		ft_ping(p, &addr_con, v[1]);
+		ping_help(c, v);
+		p = init_ping();
+		g_pingloop = 1;	
+		p->ip_addr = dns_lookup(v[1], &addr_con);
+		p->sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
+		signal(SIGINT, interupt_h);
+		if (p->sockfd && p->ip_addr)
+		{
+			printf("PING %s (%s) 56(84) bytes of data.\n", v[1], p->ip_addr);
+			ft_ping(p, &addr_con, v[1]);
+		}
 	}
+	else
+		ping_help(c, v);
 	return (0);
 }

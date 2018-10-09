@@ -95,9 +95,9 @@ void		ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 					error_report(p);
 			}
 		}
-		sleep(1);
+		sec_sleep(1);
 	}
-	(!g_pingloop) ? ping_print(p, 0, domain) : 0;
+	ping_print(p, 0, domain);
 }
 
 int			main(int c, char **v)
@@ -105,15 +105,14 @@ int			main(int c, char **v)
 	struct sockaddr_in	addr_con;
 	t_main				*p;
 
+	signal(SIGINT, interupt_h);
 	if (c >= 2 && c < 4)
 	{
 		p = init_ping();
 		p->v = ping_help(c, v);
 		g_ping.pingloop = 1;
-		g_ping.sleeper = 1;
 		p->ip_addr = dns_lookup((c == 2) ? v[1] : v[2], &addr_con);
 		p->sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
-		signal(SIGINT, interupt_h);
 		if (p->sockfd && p->ip_addr)
 		{
 			printf("PING %s (%s) 56(84) bytes of data.\n",

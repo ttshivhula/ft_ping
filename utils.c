@@ -25,15 +25,6 @@ void			sec_sleep(int sec)
 		gettimeofday(&current, NULL);
 }
 
-int				ft_sleep(int sec)
-{
-	alarm(sec);
-	while (g_ping.sleeper)
-		;
-	alarm(0);
-	g_ping.sleeper = 1;
-}
-
 unsigned short	checksum(void *b, int len)
 {
 	unsigned short	*buf;
@@ -55,10 +46,8 @@ unsigned short	checksum(void *b, int len)
 
 void			interupt_h(int sig)
 {
-	if (sig == SIGALRM)
-		g_ping.sleeper = 0;
-	else
-		g_ping.pingloop = 0;
+	g_ping.pingloop = 0;
+	(void)sig;
 }
 
 char			*dns_lookup(char *addr_host, struct sockaddr_in	*addr_con)

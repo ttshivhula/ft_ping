@@ -34,14 +34,6 @@
 # define PING_SLEEP_RATE 1000000
 # define RECV_TIMEOUT 1
 
-typedef struct			s_g
-{
-	int					pingloop;
-	int					sleeper;
-}						t_g;
-
-t_g						g_ping;
-
 typedef	socklen_t		t_len;
 
 typedef struct			s_ping
@@ -70,6 +62,15 @@ typedef	struct			s_main
 	long double			total_msec;
 	struct timeval		tv_out;
 }						t_main;
+
+typedef struct			s_g
+{
+	int					pingloop;
+	int					sleeper;
+}						t_g;
+
+t_g						g_ping;
+
 unsigned short			checksum(void *b, int len);
 void					interupt_h(int inter);
 char					*dns_lookup(char *addr_host,
@@ -80,5 +81,6 @@ void					exit_err(char *s);
 t_ping					create_msg(int *msg_count);
 void					ft_ping_msg(t_main *p);
 void					error_report(t_main *p);
+void					ft_sleep(int sec);
 
 #endif

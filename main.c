@@ -106,8 +106,8 @@ int			main(int c, char **v)
 
 	if (c >= 2 && c < 4)
 	{
-		ping_help(c, v);
 		p = init_ping();
+		p->v = ping_help(c, v);
 		g_pingloop = 1;
 		p->ip_addr = dns_lookup((c == 2) ? v[1] : v[2], &addr_con);
 		p->sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);

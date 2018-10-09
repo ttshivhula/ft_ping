@@ -68,7 +68,7 @@ char			*dns_lookup(char *addr_host, struct sockaddr_in	*addr_con)
 	return (ip);
 }
 
-void			ping_help(int c, char **v)
+int			ping_help(int c, char **v)
 {
 	if (c == 1 || (c == 2 && v[1][0] == '-'
 				&& v[1][1] == 'h' && v[1][2] == '\0'))
@@ -88,4 +88,7 @@ void			ping_help(int c, char **v)
 		printf("usage: ./ft_ping [-vh] hostname\n");
 		exit(0);
 	}
+	if (v[1][0] == '-' && v[1][1] == 'v' && v[1][2] == '\0')
+		return (1);
+	return (0);
 }

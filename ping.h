@@ -48,6 +48,7 @@ typedef	struct			s_main
 {
 	t_ping				pckt;
 	int					ttl_val;
+	int					v;
 	char				*ip_addr;
 	int					sockfd;
 	int					msg_count;
@@ -68,7 +69,7 @@ void					interupt_h(int inter);
 char					*dns_lookup(char *addr_host,
 		struct sockaddr_in *addr_con);
 void					sec_sleep(int sec);
-void					ping_help(int c, char **v);
+int					ping_help(int c, char **v);
 void					exit_err(char *s);
 t_ping					create_msg(int *msg_count);
 void					ft_ping_msg(t_main *p);

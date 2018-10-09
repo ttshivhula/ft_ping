@@ -10,16 +10,16 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_nm
+NAME = ft_ping
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -I.
-SRC = main.c utils.c exit.c \
+SRC = main.c utils.c exit.c
 
 OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@gcc $(OBJ)$(CFLAGS) -o $(NAME)
+	@gcc $(OBJ) $(CFLAGS) -o $(NAME)
 	@printf "\x1b[32mCompiled $(NAME)\x1b[0m\n"
 
 clean:

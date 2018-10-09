@@ -32,9 +32,7 @@ t_main		*init_ping(void)
 t_ping		create_msg(int *msg_count)
 {
 	t_ping	pckt;
-	int		i;
 
-	i = -1;
 	bzero(&pckt, sizeof(pckt));
 	pckt.hdr.type = ICMP_ECHO;
 	pckt.hdr.un.echo.id = getpid();
@@ -84,7 +82,7 @@ void		ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 					(struct sockaddr *)ping_addr, sizeof(*ping_addr)) <= 0)
 			p->flag = 0;
 		if (!(recvfrom(p->sockfd, &p->pckt, sizeof(p->pckt), 0,
-						(struct sockaddr*)&p->r_addr, &p->addr_len) <= 0
+						(struct sockaddr*)&p->r_addr, (socklen_t *)&p->addr_len) <= 0
 					&& p->msg_count > 1))
 		{
 			gettimeofday(&p->time_end, NULL);
@@ -104,7 +102,6 @@ void		ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 int			main(int c, char **v)
 {
 	struct sockaddr_in	addr_con;
-	char				net_buf[NI_MAXHOST];
 	t_main				*p;
 
 	if (c >= 2 && c < 4)

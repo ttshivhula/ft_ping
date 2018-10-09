@@ -57,20 +57,15 @@ void	ping_print(t_main *p, int type, char *ping_dom)
 				p->ttl_val, p->rtt_msec);
 		p->msg_received_count++;
 	}
-	else if (type == 2)
-	{
-		printf("Error..Packet received with ICMP type %d code %d\n",
-				p->pckt.hdr.type, p->pckt.hdr.code);
-	}
 	else
 	{
 		gettimeofday(&p->tfe, NULL);
 		timeElapsed = ((double)(p->tfe.tv_usec - p->tfs.tv_usec))/1000000.0;
 		p->total_msec = (p->tfe.tv_sec - p->tfs.tv_sec)*1000.0+ timeElapsed;
 		printf("\n--- %s ping statistics ---\n", ping_dom);
-		printf("%d packets sent, %d packets received, %f percent packet loss. Total time: %.1Lf ms\n",
+		printf("%d packets sent, %d packets received, %d percent packet loss. Total time: %.1Lf ms\n",
 				p->msg_count, p->msg_received_count,
-				((p->msg_count - p->msg_received_count) / p->msg_count) * 100.0, p->total_msec); 
+				(int)(((p->msg_count - p->msg_received_count) / p->msg_count) * 100), p->total_msec); 
 	}
 }
 
@@ -87,23 +82,18 @@ void	ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 		if (sendto(p->sockfd, &p->pckt, sizeof(p->pckt), 0, (struct sockaddr*) ping_addr,
 					sizeof(*ping_addr)) <= 0)
 		{
-			printf("Packet Sending Failed!\n");
 			p->flag = 0;
 		}
 		p->addr_len = sizeof(p->r_addr);
-		if ( recvfrom(p->sockfd, &p->pckt, sizeof(p->pckt), 0, 
+		if (!(recvfrom(p->sockfd, &p->pckt, sizeof(p->pckt), 0, 
 					(struct sockaddr*)&p->r_addr, &p->addr_len) <= 0
-				&& p->msg_count > 1) 
-			printf("Packet receive failed!\n");
-		else
+				&& p->msg_count > 1)) 
 		{
 			gettimeofday(&p->time_end, NULL);
 			p->rtt_msec = ((double)(p->time_end.tv_usec - p->time_start.tv_usec))/1000.0;
 			if(p->flag)
 			{
-				if(!(p->pckt.hdr.type == 69 && p->pckt.hdr.code == 0))
-					ping_print(p, 2, domain); 
-				else
+				if ((p->pckt.hdr.type == 69 && p->pckt.hdr.code == 0))
 					ping_print(p, 1, domain);
 			}
 		} 

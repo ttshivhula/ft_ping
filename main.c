@@ -32,8 +32,13 @@ t_main		*init_ping(void)
 t_ping		create_msg(int *msg_count)
 {
 	t_ping	pckt;
-
+	int	i;
+	
+	i = -1;
 	bzero(&pckt, sizeof(pckt));
+	while (++i < (int)sizeof(pckt.msg) - 1)
+		pckt.msg[i] = i + '0';
+	pckt.msg[i] = 0;
 	pckt.hdr.type = ICMP_ECHO;
 	pckt.hdr.un.echo.id = getpid();
 	pckt.hdr.un.echo.sequence = (*msg_count)++;

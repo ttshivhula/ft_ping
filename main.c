@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 13:26:02 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 10:02:38 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 10:04:23 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_main	*init_ping(void)
 	p->tv_out.tv_sec = RECV_TIMEOUT;
 	p->tv_out.tv_usec = 0;
 	p->ttl_val = 63;
-	p->msg_count = -1;
+	p->msg_count = 0;
 	p->msg_received_count = 0;
 	p->flag = 1;
 	gettimeofday(&p->tfs, NULL);

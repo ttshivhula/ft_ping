@@ -83,4 +83,10 @@ void			ping_help(int c, char **v)
 		printf("usage: ./ft_ping [-vh] hostname\n");
 		exit(0);
 	}
+	if ((c == 3 && v[1][0] == '-'
+				&& v[1][1] == 'h' && v[1][2] == '\0'))
+	{
+		printf("usage: ./ft_ping [-vh] hostname\n");
+		exit(0);
+	}
 }

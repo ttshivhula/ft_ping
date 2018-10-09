@@ -57,7 +57,7 @@ void		ping_print(t_main *p, int type, char *ping_dom)
 	{
 		gettimeofday(&p->tfe, NULL);
 		time_elapsed = (((double)(p->tfe.tv_usec -
-						p->tfs.tv_usec)) / 1000.0) - 1000;
+						p->tfs.tv_usec)) / 1000.0);
 		p->total_msec = (p->tfe.tv_sec -
 				p->tfs.tv_sec) * 1000.0 + time_elapsed;
 		pkt_loss = (double)(((p->msg_count -
@@ -94,7 +94,7 @@ void		ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 					ping_print(p, 1, domain);
 			}
 		}
-		sec_sleep(1);
+		g_pingloop ? sec_sleep(1) : 0;
 	}
 	ping_print(p, 0, domain);
 }
@@ -109,12 +109,13 @@ int			main(int c, char **v)
 		ping_help(c, v);
 		p = init_ping();
 		g_pingloop = 1;
-		p->ip_addr = dns_lookup(v[1], &addr_con);
+		p->ip_addr = dns_lookup((c == 2) ? v[1] : v[2], &addr_con);
 		p->sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 		signal(SIGINT, interupt_h);
 		if (p->sockfd && p->ip_addr)
 		{
-			printf("PING %s (%s) 56(84) bytes of data.\n", v[1], p->ip_addr);
+			printf("PING %s (%s) 56(84) bytes of data.\n",
+					(c == 2) ? v[1] : v[2], p->ip_addr);
 			ft_ping(p, &addr_con, v[1]);
 		}
 	}

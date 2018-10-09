@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 11:02:32 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 11:14:56 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 12:10:50 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,11 @@ void	ft_ping_msg(t_main *p)
 	p->pckt = create_msg(&p->msg_count);
 	gettimeofday(&p->time_start, NULL);
 	(p->msg_count == 1) ? gettimeofday(&p->tfs, NULL) : 0;
+}
+
+void	error_report(t_main *p)
+{
+		printf("%d bytes from %s: type = %d code = %d\n",
+				PING_PKT_SIZE, p->ip_addr,
+				p->pckt.hdr.type, p->pckt.hdr.code);
 }

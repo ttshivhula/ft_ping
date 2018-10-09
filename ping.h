@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 11:00:03 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 11:36:44 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 12:10:47 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ int					ping_help(int c, char **v);
 void					exit_err(char *s);
 t_ping					create_msg(int *msg_count);
 void					ft_ping_msg(t_main *p);
+void					error_report(t_main *p);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 13:26:02 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 11:36:48 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 12:10:53 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void		ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 			{
 				if ((p->pckt.hdr.type == 69 && p->pckt.hdr.code == 0))
 					ping_print(p, 1, domain);
+				else
+					error_report(p);
 			}
 		}
 		sec_sleep(1);

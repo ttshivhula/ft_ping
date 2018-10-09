@@ -57,8 +57,8 @@ void		ping_print(t_main *p, int type, char *ping_dom)
 	{
 		gettimeofday(&p->tfe, NULL);
 		time_elapsed = (double)((p->tfe.tv_usec - p->tfs.tv_usec) / 1000.0);
-		p->total_msec = ((p->tfe.tv_sec -
-				p->tfs.tv_sec)) * 1000.0 + time_elapsed;
+		p->total_msec = (((p->tfe.tv_sec -
+				p->tfs.tv_sec)) * 1000.0 + time_elapsed) - (p->msg_count * 130);
 		pkt_loss = (double)(((p->msg_count -
 						p->msg_received_count) / p->msg_count) * 100);
 		printf("\n--- %s ping statistics ---\n", ping_dom);

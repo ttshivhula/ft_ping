@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 13:26:02 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 10:07:10 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/09 10:16:14 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_main	*init_ping(void)
 	p->msg_count = 0;
 	p->msg_received_count = 0;
 	p->flag = 1;
-//	gettimeofday(&p->tfs, NULL);
 	return (p);
 }
 
@@ -77,7 +76,6 @@ void	ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 	while(g_pingloop)
 	{
 		p->flag = 1;
-		sec_sleep(1);
 		p->pckt = create_msg(&p->msg_count);
 		gettimeofday(&p->time_start, NULL);
 		(p->msg_count == 1) ? gettimeofday(&p->tfs, NULL) : 0;
@@ -100,6 +98,7 @@ void	ft_ping(t_main *p, struct sockaddr_in *ping_addr, char *domain)
 					ping_print(p, 1, domain);
 			}
 		} 
+		sec_sleep(1);
 	}
 	ping_print(p, 0, domain);
 } 

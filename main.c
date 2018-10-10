@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 13:26:02 by ttshivhu          #+#    #+#             */
-/*   Updated: 2018/10/09 14:43:13 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2018/10/10 08:40:20 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_main		*init_ping(void)
 t_ping		create_msg(int *msg_count)
 {
 	t_ping	pckt;
-	int	i;
-	
+	int		i;
+
 	i = -1;
 	bzero(&pckt, sizeof(pckt));
 	while (++i < (int)sizeof(pckt.msg) - 1)
@@ -62,8 +62,8 @@ void		ping_print(t_main *p, int type, char *ping_dom)
 	{
 		gettimeofday(&p->tfe, NULL);
 		time_elapsed = (double)((p->tfe.tv_usec - p->tfs.tv_usec) / 1000.0);
-		p->total_msec = (((p->tfe.tv_sec -
-				p->tfs.tv_sec)) * 1000.0 + time_elapsed) - (p->msg_count * 130);
+		p->total_msec = (((p->tfe.tv_sec - p->tfs.tv_sec)) *
+				1000 + time_elapsed) - (p->msg_count * 130);
 		pkt_loss = (double)(((p->msg_count -
 						p->msg_received_count) / p->msg_count) * 100);
 		printf("\n--- %s ping statistics ---\n", ping_dom);
